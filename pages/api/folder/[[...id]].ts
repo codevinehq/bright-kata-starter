@@ -48,6 +48,10 @@ const folderRest = handle({
       },
     });
 
+    if (!folder) {
+      throw createHttpError(404, "folder not found");
+    }
+
     res.json(folder);
   },
   PUT: async (req, res) => {

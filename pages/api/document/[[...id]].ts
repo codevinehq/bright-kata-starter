@@ -2,6 +2,7 @@ import createError from "http-errors";
 import { Document } from "@prisma/client";
 import prisma from "../../../prisma";
 import handle from "../../../utils/handle";
+import createHttpError from "http-errors";
 
 type BaseResponse = Document;
 export type DocumentGetResponse = BaseResponse[];
@@ -42,6 +43,10 @@ const documentRest = handle({
         id: Number(id),
       },
     });
+
+    if (!document) {
+      throw createHttpError(404, "folder not found");
+    }
 
     res.json(document);
   },
